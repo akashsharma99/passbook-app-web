@@ -1,36 +1,68 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+` 23-03-2024 `
 
-## Getting Started
+# Passbook App
 
-First, run the development server:
+Plan to create nextjs tailwindcss app with postgresql database and golang apis as backend.  
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Overview
+- Landing page which has a login / signup form. no other pages should be visible without authentication.
+- home page after login that shows a carousel of passbooks. Each passbook should show the bank name, account number and total balance.
+- Clicking on a passbook should take you to a page that shows all transactions for that passbook.
+- Add button on the transactions page to add a new transaction which opens a modal with a form to add a new transaction.
+- Each transaction should have a delete button to delete the transaction.
+- Each transaction should have an edit button to edit the transaction which opens a modal with a form to edit the transaction.
+- Each transaction should have a tags section which shows the tags for that transaction. Clicking on a tag should filter the transactions by that tag.
+- the table should be paginated with 10 transactions per page.
+- the table should have a search bar to search for transactions by party name or description or tag.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Entities
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### User
+- user_id
+- username
+- email
+- password
+- created_at
+- updated_at
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Passbook
+- passbook_id
+- user_id (foreign key to users table)
+- bank_name
+- account_number
+- total_balance
 
-## Learn More
+### Transaction
+- transaction_id
+- amount
+- transaction_date
+- type (CREDIT/DEBIT)
+- party_name
+- description
+- created_at
+- updated_at
+- tags ( comma separated list of tags. max 3 tags per transaction)
+- passbook_id (foreign key to passbooks table)
+- user_id (foreign key to users table)
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Requirements
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### Users
+- User can register with username, email and password.
+- User can login with email and password.
 
-## Deploy on Vercel
+### Passbooks
+- User can create multiple passbooks with bank name, account number and zero balance.
+- User can view all passbooks.
+- user can delete a passbook which also deletes all transactions for that passbook.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### Transactions
+- User can add transactions to a passbook with amount, transaction date, type, party name, description and tags.
+- User can edit a transaction.
+- User can delete a transaction.
+- User can view all transactions for a passbook.
+- User can filter transactions by
+    - party name
+    - description
+    - tags
