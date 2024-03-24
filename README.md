@@ -66,3 +66,4 @@ Plan to create nextjs tailwindcss app with postgresql database and golang apis a
     - party name
     - description
     - tags
+
